@@ -8,6 +8,7 @@ export const NavbarStyled = styled.div`
   padding: 24px;
   position: fixed;
   width: 100%;
+  z-index: 999;
 `
 
 export const Logo = styled(Title)`
