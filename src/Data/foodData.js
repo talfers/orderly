@@ -17,17 +17,17 @@ export const foods = [
   {
     name: "Sausage Pizza",
     img: "/img/pizza_item_4.jpg",
-    section: "sandwich"
+    section: "sandwiches"
   },
   {
     name: "Some Pizza",
     img: "/img/pizza_item_5.jpg",
-    section: "sandwich"
+    section: "sandwiches"
   },
   {
     name: "Other Pizza",
     img: "/img/pizza_item_6.jpg",
-    section: "sandwich"
+    section: "sandwiches"
   },
   {
     name: "Best Pizza",

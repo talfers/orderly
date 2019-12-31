@@ -7,7 +7,7 @@ export const MenuGrid = styled.div`
   grid-gap: 20px;
 `
 
-export const MenuItem = styled(Title)`
+export const MenuItem = styled.div`
   height: 150px;
   padding: 10px;
   font-size: 24px;
@@ -15,13 +15,20 @@ export const MenuItem = styled(Title)`
   background-size: cover;
   background-position: center;
   border-radius: 10px;
-  box-shadow: 0px 2px 10px 4px lightgrey;
+  box-shadow: 0px 2px 4px 1px lightgrey;
+  filter: contrast(75%);
+  transition-property: box-shadow margin filter;
+  transition-duration: 0.2s;
+  margin-top: 3px;
   &:hover {
     cursor: pointer;
-    opacity: 0.8;
+    box-shadow: 0px 6px 10px 4px lightgrey;
+    filter: contrast(100%);
+    margin-top: 0px;
+    margin-bottom: 3px;
   }
 `
-export const MenuLabel = styled.div`
+export const MenuItemLabel = styled(Title)`
   position: absolute;
   padding: 5px;
   background: rgba(255, 255, 255, 0.7);
