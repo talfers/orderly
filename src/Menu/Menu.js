@@ -11,16 +11,27 @@ export const MenuStyled = styled.div`
 export function Menu(){
   return (
     <MenuStyled>
-    <h1>Menu</h1>
-      <MenuGrid>
-        {menuItems.map(item => {
-          return(
-            <MenuItem img={item.img}>
-              <MenuLabel>{item.name}</MenuLabel>
-            </MenuItem>
-          )
-        })}
-      </MenuGrid>
+      {
+        //<h1>Menu</h1>
+      }
+        <>
+          {Object.entries(menuItems).map(([key, values]) => {
+            return(
+              <>
+                <h1>{key}</h1>
+                  <MenuGrid>
+                    {values.map(item => {
+                      return(
+                        <MenuItem img={item.img}>
+                          <MenuLabel>{item.name}</MenuLabel>
+                        </MenuItem>
+                      )
+                    })}
+                  </MenuGrid>
+                </>
+            )
+          })}
+        </>
     </MenuStyled>
   )
 }

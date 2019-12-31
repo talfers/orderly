@@ -3,12 +3,12 @@ import { Title } from '../Styles/title'
 
 export const MenuGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   grid-gap: 20px;
 `
 
 export const MenuItem = styled(Title)`
-  height: 100px;
+  height: 150px;
   padding: 10px;
   font-size: 24px;
   background-image: ${({img}) => `url(${img});`}
