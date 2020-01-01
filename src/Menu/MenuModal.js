@@ -65,11 +65,22 @@ export const ConfirmButton = styled(Title)`
   background: ${pizzaRed};
 `
 
-export function MenuModal({openItem, setOpenItem}) {
+export function MenuModal({openItem, setOpenItem, orders, setOrders}) {
+  const order = {
+    name: "Item 1"
+  };
+
+  function closeModal() {
+    setOpenItem();
+  }
+  function addToOrder() {
+    setOrders([...orders, order]);
+    closeModal();
+  }
   return (
     openItem ? (
       <>
-        <ModalShadow onClick={() => setOpenItem()}/>
+        <ModalShadow onClick={() => closeModal()}/>
         <Modal>
           <ModalBanner img={openItem.img}>
             <ModalBannerLabel>{openItem.name}</ModalBannerLabel>
@@ -78,7 +89,7 @@ export function MenuModal({openItem, setOpenItem}) {
 
           </ModalContent>
           <ModalFooter>
-            <ConfirmButton>Add to Order</ConfirmButton>
+            <ConfirmButton onClick={() => addToOrder()}>Add to Order</ConfirmButton>
           </ModalFooter>
         </Modal>
       </>

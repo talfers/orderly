@@ -19,14 +19,22 @@ const OrderStyled = styled.div`
 const OrderContent = styled(ModalContent)`
   padding: 20px;
   height: 100%;
+
 `
 
-export function Order() {
+export function Order({orders}) {
   return (
     <OrderStyled>
+    {orders.length === 0 ? (
       <OrderContent>
         Your order is looking pretty empty.
       </OrderContent>
+    ) : (
+      <OrderContent>{orders.length}</OrderContent>
+    )
+
+    }
+
       <ModalFooter>
         <ConfirmButton>Confirm</ConfirmButton>
       </ModalFooter>
