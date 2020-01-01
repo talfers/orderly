@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { MenuItemLabel } from './MenuGrid';
 import { pizzaRed } from '../Styles/colors';
 import { Title } from '../Styles/title';
+import { formatPrice } from '../Data/foodData';
 
 const Modal = styled.div`
   position: fixed;
@@ -66,14 +67,11 @@ export const ConfirmButton = styled(Title)`
 `
 
 export function MenuModal({openItem, setOpenItem, orders, setOrders}) {
-  const order = {
-    name: "Item 1"
-  };
 
   function closeModal() {
     setOpenItem();
   }
-  function addToOrder() {
+  function addToOrder(order) {
     setOrders([...orders, order]);
     closeModal();
   }
@@ -89,7 +87,7 @@ export function MenuModal({openItem, setOpenItem, orders, setOrders}) {
 
           </ModalContent>
           <ModalFooter>
-            <ConfirmButton onClick={() => addToOrder()}>Add to Order</ConfirmButton>
+            <ConfirmButton onClick={() => addToOrder(openItem)}>Add to Order: {formatPrice(openItem.price)}</ConfirmButton>
           </ModalFooter>
         </Modal>
       </>

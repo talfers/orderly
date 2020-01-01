@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { menuItems } from '../Data/foodData';
+import { menuItems, formatPrice } from '../Data/foodData';
 import { MenuGrid, MenuItem, MenuItemLabel } from './MenuGrid';
 
 export const MenuStyled = styled.div`
@@ -22,7 +22,10 @@ export function Menu({setOpenItem}){
                     {values.map(item => {
                       return(
                         <MenuItem img={item.img} onClick={() => setOpenItem(item)}>
-                          <MenuItemLabel>{item.name}</MenuItemLabel>
+                          <MenuItemLabel>
+                            <div>{item.name}</div>
+                            <div>{formatPrice(item.price)}</div>
+                          </MenuItemLabel>
                         </MenuItem>
                       )
                     })}
