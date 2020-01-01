@@ -4,6 +4,7 @@ import { MenuItemLabel } from './MenuGrid';
 import { pizzaRed } from '../Styles/colors';
 import { Title } from '../Styles/title';
 import { formatPrice } from '../Data/foodData';
+import { QuantityInput } from '../Order/QuantityInput';
 
 const Modal = styled.div`
   position: fixed;
@@ -45,14 +46,14 @@ const ModalBannerLabel = styled(MenuItemLabel)`
 export const ModalContent = styled.div`
   overflow: auto;
   height: 100px;
-`
+`;
 
 export const ModalFooter = styled.div`
   height: 60px;
   box-shadow: 0px -4px 4px 0px lightgrey;
   display: flex;
   justify-content: center;
-`
+`;
 
 export const ConfirmButton = styled(Title)`
   margin: 10px;
@@ -64,19 +65,20 @@ export const ConfirmButton = styled(Title)`
   width: 200px;
   cursor: pointer;
   background: ${pizzaRed};
-`
+`;
 
-export function MenuModal({openItem, setOpenItem, orders, setOrders}) {
-
+function MenuModalContainer({openItem, setOpenItem, orders, setOrders}) {
+  const order = {
+    ...openItem
+  };
   function closeModal() {
     setOpenItem();
   }
-  function addToOrder(order) {
+  function addToOrder() {
     setOrders([...orders, order]);
     closeModal();
   }
   return (
-    openItem ? (
       <>
         <ModalShadow onClick={() => closeModal()}/>
         <Modal>
@@ -84,14 +86,20 @@ export function MenuModal({openItem, setOpenItem, orders, setOrders}) {
             <ModalBannerLabel>{openItem.name}</ModalBannerLabel>
           </ModalBanner>
           <ModalContent>
-
+            <QuantityInput onClick={() => {}}></QuantityInput>
           </ModalContent>
           <ModalFooter>
             <ConfirmButton onClick={() => addToOrder(openItem)}>Add to Order: {formatPrice(openItem.price)}</ConfirmButton>
           </ModalFooter>
         </Modal>
       </>
-    ) : null
-
   )
+}
+
+export function MenuModal(props) {
+  if(props.openItem) {
+    return <MenuModalContainer {...props} />;
+  } else {
+    return null;
+  }
 }

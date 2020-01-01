@@ -7,10 +7,12 @@ import { MenuModal } from './Menu/MenuModal'
 import { Order } from './Order/Order'
 import { useOpenItem } from './Hooks/useOpenItem';
 import { useOrders } from './Hooks/useOrders';
+import { useTitle } from './Hooks/useTitle';
 
 function App() {
   const openItem = useOpenItem();
   const orders = useOrders();
+  useTitle(openItem.openItem, orders.orders)
   return (
     <>
       <GlobalStyle />
