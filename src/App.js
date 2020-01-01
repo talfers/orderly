@@ -4,6 +4,7 @@ import { Navbar } from './Navbar/Navbar';
 import { Banner } from './Banner/Banner';
 import { Menu } from './Menu/Menu';
 import { MenuModal } from './Menu/MenuModal'
+import { Order } from './Order/Order'
 
 function App() {
   const [openItem, setOpenItem] = useState();
@@ -13,6 +14,7 @@ function App() {
       <Navbar/>
       <Banner/>
       <Menu setOpenItem={setOpenItem} />
+      <Order/>
       <MenuModal openItem={openItem} setOpenItem={setOpenItem}/>
     </>
   );

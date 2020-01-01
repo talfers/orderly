@@ -4,9 +4,8 @@ import { menuItems } from '../Data/foodData';
 import { MenuGrid, MenuItem, MenuItemLabel } from './MenuGrid';
 
 export const MenuStyled = styled.div`
-  height: 1000px;
   margin: 0px 400px 50px 20px;
-`
+`;
 
 export function Menu({setOpenItem}){
   return (

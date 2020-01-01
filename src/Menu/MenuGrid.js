@@ -17,7 +17,7 @@ export const MenuItem = styled.div`
   border-radius: 10px;
   box-shadow: 0px 2px 4px 1px lightgrey;
   filter: contrast(75%);
-  transition-property: box-shadow margin filter;
+  transition-property: box-shadow margin-top filter;
   transition-duration: 0.2s;
   margin-top: 3px;
   &:hover {
