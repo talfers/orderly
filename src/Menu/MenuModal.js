@@ -6,6 +6,8 @@ import { Title } from '../Styles/title';
 import { formatPrice } from '../Data/foodData';
 import { QuantityInput } from '../Order/QuantityInput';
 import { useQuantity } from '../Hooks/useQuantity';
+import { Customizations } from './Customizations';
+import { useCustomizations } from '../Hooks/useCustomizations';
 
 const Modal = styled.div`
   position: fixed;
@@ -46,8 +48,9 @@ const ModalBannerLabel = styled(MenuItemLabel)`
 
 export const ModalContent = styled.div`
   overflow: auto;
-  height: 100px;
+  min-height: 100px;
   padding: 0px 40px;
+  padding-bottom: 80px;
 `;
 
 export const ModalFooter = styled.div`
@@ -70,14 +73,27 @@ export const ConfirmButton = styled(Title)`
 `;
 
 export function getPrice(order) {
-  return order.quantity * order.price;
+  let toppingPrice = order.toppings.reduce((total, topping) => {
+    if(topping.checked) {
+      return total + topping.price;
+    } else {
+      return total
+    }
+  }, 0)
+  return order.quantity * (order.price + toppingPrice) ;
+}
+
+function canCustomize(item) {
+  return item.canCustomize === true;
 }
 
 function MenuModalContainer({openItem, setOpenItem, orders, setOrders}) {
   const quantity = useQuantity(openItem && openItem.quantity);
+  const toppings = useCustomizations(openItem.toppings);
   const order = {
     ...openItem,
-    quantity: quantity.quantity
+    quantity: quantity.quantity,
+    toppings: toppings.toppings
   };
   function closeModal() {
     setOpenItem();
@@ -95,6 +111,15 @@ function MenuModalContainer({openItem, setOpenItem, orders, setOrders}) {
           </ModalBanner>
           <ModalContent>
             <QuantityInput quantity={quantity} />
+            {
+              canCustomize(openItem)?
+              <>
+              <h3>Customize your order:</h3>
+              <Customizations {...toppings}/>
+              </> :
+              <div/>
+            }
+
           </ModalContent>
           <ModalFooter>
             <ConfirmButton onClick={() => addToOrder()}>Add to Order: {formatPrice(getPrice(order))}</ConfirmButton>

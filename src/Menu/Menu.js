@@ -16,12 +16,12 @@ export function Menu({setOpenItem}){
         <>
           {Object.entries(menuItems).map(([key, values]) => {
             return(
-              <>
+              <div key={key}>
                 <h1>{key}</h1>
                   <MenuGrid>
                     {values.map(item => {
                       return(
-                        <MenuItem img={item.img} onClick={() => setOpenItem(item)}>
+                        <MenuItem key={item.name} img={item.img} onClick={() => setOpenItem(item)}>
                           <MenuItemLabel>
                             <div>{item.name}</div>
                             <div>{formatPrice(item.price)}</div>
@@ -30,7 +30,7 @@ export function Menu({setOpenItem}){
                       )
                     })}
                   </MenuGrid>
-                </>
+                </div>
             )
           })}
         </>
