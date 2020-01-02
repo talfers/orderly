@@ -61,6 +61,20 @@ export const foods = [
     section: "sides",
     price: 12,
     canCustomize: false
+  },
+  {
+    name: "Soda",
+    section: "drinks",
+    price: 2,
+    choices: ["Dr. Pepper", "Coca Cola", "Sprite", "Pespi"],
+    canCustomize: false
+  },
+  {
+    name: "Tea",
+    section: "drinks",
+    price: 1.50,
+    choices: ["Raspberry", "Lemon", "Cherry"],
+    canCustomize: false
   }
 ]
 

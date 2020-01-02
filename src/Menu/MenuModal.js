@@ -8,6 +8,8 @@ import { QuantityInput } from '../Order/QuantityInput';
 import { useQuantity } from '../Hooks/useQuantity';
 import { Customizations } from './Customizations';
 import { useCustomizations } from '../Hooks/useCustomizations';
+import { useChoice } from '../Hooks/useChoice';
+import { Choices } from './Choices';
 
 const Modal = styled.div`
   position: fixed;
@@ -35,13 +37,13 @@ const ModalShadow = styled.div`
 const ModalBanner = styled.div`
   min-height: 200px;
   margin-bottom: 20px;
-  ${({img}) => `background-image: url(${img});`}
+  ${({img}) => (img ? `background-image: url(${img});` : `min-height: 75px;`)}
   background-position: center;
   background-size: cover;
 `;
 
 const ModalBannerLabel = styled(MenuItemLabel)`
-  top: 100px;
+  top: ${({img}) => (img ? `200px;` : `20px;`)}
   font-size: 30px;
   padding: 5px 40px;
 `;
@@ -70,6 +72,13 @@ export const ConfirmButton = styled(Title)`
   width: 200px;
   cursor: pointer;
   background: ${pizzaRed};
+  ${({disabled}) => (disabled ?
+    `
+      opacity: .5;
+      background: grey;
+      pointer-events: none;
+    ` : null
+  )}
 `;
 
 export function getPrice(order) {
@@ -90,10 +99,12 @@ function canCustomize(item) {
 function MenuModalContainer({openItem, setOpenItem, orders, setOrders}) {
   const quantity = useQuantity(openItem && openItem.quantity);
   const toppings = useCustomizations(openItem.toppings);
+  const chosenRadio = useChoice(openItem.choice);
   const order = {
     ...openItem,
     quantity: quantity.quantity,
-    toppings: toppings.toppings
+    toppings: toppings.toppings,
+    choice: chosenRadio.choice
   };
   function closeModal() {
     setOpenItem();
@@ -112,17 +123,22 @@ function MenuModalContainer({openItem, setOpenItem, orders, setOrders}) {
           <ModalContent>
             <QuantityInput quantity={quantity} />
             {
-              canCustomize(openItem)?
+              canCustomize(openItem) ?
               <>
-              <h3>Customize your order:</h3>
-              <Customizations {...toppings}/>
+                <h3>Customize your order:</h3>
+                <Customizations {...toppings}/>
               </> :
               <div/>
+            }
+            {
+              openItem.choices ?
+                <Choices openItem={openItem} chosenRadio={chosenRadio} />
+              : <div/>
             }
 
           </ModalContent>
           <ModalFooter>
-            <ConfirmButton onClick={() => addToOrder()}>Add to Order: {formatPrice(getPrice(order))}</ConfirmButton>
+            <ConfirmButton disabled={openItem.choices && !chosenRadio.choice} onClick={() => addToOrder()}>Add to Order: {formatPrice(getPrice(order))}</ConfirmButton>
           </ModalFooter>
         </Modal>
       </>

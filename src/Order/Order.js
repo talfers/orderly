@@ -72,6 +72,7 @@ export function Order({orders}) {
                   .map(topping => topping.name)
                   .join(", ")
               }</OrderItemDetail>
+              {order.choice ? <OrderItemDetail>{order.choice}</OrderItemDetail> : <div/>}
             </OrderContainer>
           )
         })}
