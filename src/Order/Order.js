@@ -12,7 +12,7 @@ const OrderStyled = styled.div`
   background: #fff;
   height: calc(100% - 84px);
   box-shadow: 0px 0px 5px 1px grey;
-  z-index: 19;
+  z-index: 5;
   display: flex;
   flex-direction: column;
 `;
@@ -23,8 +23,15 @@ const OrderContent = styled(ModalContent)`
 `;
 
 const OrderContainer = styled.div`
-  padding: 10px 0px;
+  padding: 10px;
   border-bottom: 1px solid grey;
+  ${({editable}) => editable ? `
+    cursor: pointer;
+    transition: background 0.2s ease;
+    &:hover {
+      background: #f0f0f0;
+    }
+  ` : null}
 `;
 
 const OrderItem = styled.div`
@@ -39,31 +46,51 @@ const OrderItemDetail = styled.div`
   font-size: 10px;
 `;
 
-export function Order({orders}) {
+const TrashCan = styled.img`
+  width: 20px;
+  cursor: 'pointer';
+`
+
+export function Order({orders, setOrders, setOpenItem}) {
   const subtotal = orders.reduce((total, order) => {
     return total + getPrice(order);
   }, 0)
   const tax = subtotal * 0.07;
   const total = tax + subtotal;
 
+  const deleteItem = (index) => {
+    const newOrders = [...orders];
+    newOrders.splice(index, 1);
+    setOrders(newOrders);
+  }
+
   return (
     <OrderStyled>
     {orders.length === 0 ? (
       <OrderContent>
         Your order is looking pretty empty.
+        {
+          //<img src="/img/empty.png" />
+        }
       </OrderContent>
     ) : (
       <OrderContent>
         <OrderContainer>
           Your Order:
         </OrderContainer>
-        {orders.map(order => {
+        {orders.map((order, index) => {
           return (
-            <OrderContainer key={order.name}>
-              <OrderItem>
+            <OrderContainer editable key={order.name}>
+              <OrderItem onClick={() => {setOpenItem({...order, index})}}>
                 <div>{order.quantity}</div>
                 <div>{order.name}</div>
-                <div></div>
+                <TrashCan
+                  onClick={(e) => {
+                    deleteItem(index);
+                    e.stopPropagation();
+                  }}
+                  src="/img/trash.png"
+                />
                 <div>{formatPrice(getPrice(order))}</div>
               </OrderItem>
               <OrderItemDetail>

@@ -19,7 +19,7 @@ function App() {
       <Navbar/>
       <Banner/>
       <Menu {...openItem} />
-      <Order {...orders} />
+      <Order {...orders} {...openItem} />
       <MenuModal {...openItem} {...orders} />
     </>
   );

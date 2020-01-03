@@ -100,19 +100,29 @@ function MenuModalContainer({openItem, setOpenItem, orders, setOrders}) {
   const quantity = useQuantity(openItem && openItem.quantity);
   const toppings = useCustomizations(openItem.toppings);
   const chosenRadio = useChoice(openItem.choice);
+  const isEditing = openItem.index > -1;
   const order = {
     ...openItem,
     quantity: quantity.quantity,
     toppings: toppings.toppings,
     choice: chosenRadio.choice
   };
-  function closeModal() {
+
+  const closeModal = () => {
     setOpenItem();
   }
-  function addToOrder() {
+  const addToOrder = () => {
     setOrders([...orders, order]);
     closeModal();
   }
+
+  const editOrder = () => {
+    const newOrders = [...orders];
+    newOrders[order.index] = order;
+    setOrders(newOrders);
+    closeModal();
+  }
+
   return (
       <>
         <ModalShadow onClick={() => closeModal()}/>
@@ -138,7 +148,12 @@ function MenuModalContainer({openItem, setOpenItem, orders, setOrders}) {
 
           </ModalContent>
           <ModalFooter>
-            <ConfirmButton disabled={openItem.choices && !chosenRadio.choice} onClick={() => addToOrder()}>Add to Order: {formatPrice(getPrice(order))}</ConfirmButton>
+            <ConfirmButton
+              disabled={openItem.choices && !chosenRadio.choice}
+              onClick={isEditing? () => editOrder(openItem) : () => addToOrder()}
+            >
+              {isEditing? "Update Order" : "Add to Order:"} {formatPrice(getPrice(order))}
+            </ConfirmButton>
           </ModalFooter>
         </Modal>
       </>
