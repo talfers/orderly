@@ -80,7 +80,7 @@ export function Order({orders, setOrders, setOpenItem}) {
         </OrderContainer>
         {orders.map((order, index) => {
           return (
-            <OrderContainer editable key={order.name}>
+            <OrderContainer editable key={index}>
               <OrderItem onClick={() => {setOpenItem({...order, index})}}>
                 <div>{order.quantity}</div>
                 <div>{order.name}</div>
