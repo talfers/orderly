@@ -8,18 +8,20 @@ import { Order } from './Order/Order'
 import { useOpenItem } from './Hooks/useOpenItem';
 import { useOrders } from './Hooks/useOrders';
 import { useTitle } from './Hooks/useTitle';
+import { useAuthentication } from './Hooks/useAuthentication';
 
 function App() {
   const openItem = useOpenItem();
   const orders = useOrders();
+  const auth = useAuthentication();
   useTitle(openItem.openItem, orders.orders)
   return (
     <>
       <GlobalStyle />
-      <Navbar/>
+      <Navbar {...auth} />
       <Banner/>
       <Menu {...openItem} />
-      <Order {...orders} {...openItem} />
+      <Order {...orders} {...openItem} {...auth}/>
       <MenuModal {...openItem} {...orders} />
     </>
   );

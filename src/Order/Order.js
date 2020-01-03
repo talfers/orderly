@@ -51,7 +51,7 @@ const TrashCan = styled.img`
   cursor: 'pointer';
 `
 
-export function Order({orders, setOrders, setOpenItem}) {
+export function Order({orders, setOrders, setOpenItem, loggedIn, login}) {
   const subtotal = orders.reduce((total, order) => {
     return total + getPrice(order);
   }, 0)
@@ -126,7 +126,7 @@ export function Order({orders, setOrders, setOpenItem}) {
     }
 
       <ModalFooter>
-        <ConfirmButton>Confirm</ConfirmButton>
+        <ConfirmButton onClick={() => !loggedIn ? login() : () => {}}>Confirm</ConfirmButton>
       </ModalFooter>
     </OrderStyled>
   )
