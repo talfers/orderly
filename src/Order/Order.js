@@ -4,6 +4,8 @@ import { ModalFooter, ModalContent, ConfirmButton } from '../Menu/MenuModal';
 import { formatPrice } from '../Data/foodData';
 import { getPrice } from '../Menu/MenuModal';
 
+const database = window.firebase.database();
+
 const OrderStyled = styled.div`
   position: fixed;
   right: 0px;
@@ -51,7 +53,38 @@ const TrashCan = styled.img`
   cursor: 'pointer';
 `
 
-export function Order({orders, setOrders, setOpenItem, loggedIn, login}) {
+const sendOrder = (orders, {email, displayName}) => {
+  var newOrderRef = database.ref("orders").push();
+  const newOrders = orders.map(order => {
+    return Object.keys(order).reduce((acc, orderKey) => {
+      if(!order[orderKey]) {
+        console.log(acc);
+        return acc;
+      }
+      if(orderKey === 'toppings') {
+        let toppings = order[orderKey].filter(t => t.checked);
+        toppings = toppings.map(topping => topping.name)
+
+        return {
+          ...acc,
+          [orderKey]: toppings
+        }
+      }
+      return {
+        ...acc,
+        [orderKey]: order[orderKey]
+      }
+    }, {})
+  })
+  newOrderRef.set({
+    order: newOrders,
+    email,
+    displayName
+  })
+
+}
+
+export function Order({orders, setOrders, setOpenItem, loggedIn, login, setOrderModalOpen}) {
   const subtotal = orders.reduce((total, order) => {
     return total + getPrice(order);
   }, 0)
@@ -126,7 +159,16 @@ export function Order({orders, setOrders, setOpenItem, loggedIn, login}) {
     }
 
       <ModalFooter>
-        <ConfirmButton onClick={() => !loggedIn ? login() : () => {}}>Confirm</ConfirmButton>
+        <ConfirmButton disabled={orders.length === 0} onClick={() => {
+          if(loggedIn){
+            setOrderModalOpen(true);
+            sendOrder(orders, loggedIn);
+          } else {
+            login()
+          }}}
+          >
+            Confirm
+          </ConfirmButton>
       </ModalFooter>
     </OrderStyled>
   )

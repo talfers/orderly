@@ -11,7 +11,7 @@ import { useCustomizations } from '../Hooks/useCustomizations';
 import { useChoice } from '../Hooks/useChoice';
 import { Choices } from './Choices';
 
-const Modal = styled.div`
+export const Modal = styled.div`
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -24,7 +24,7 @@ const Modal = styled.div`
   left: calc(50% - 250px);
 `;
 
-const ModalShadow = styled.div`
+export const ModalShadow = styled.div`
   position: fixed;
   height: 100%;
   width: 100%;
