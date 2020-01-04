@@ -58,7 +58,6 @@ const sendOrder = (orders, {email, displayName}) => {
   const newOrders = orders.map(order => {
     return Object.keys(order).reduce((acc, orderKey) => {
       if(!order[orderKey]) {
-        console.log(acc);
         return acc;
       }
       if(orderKey === 'toppings') {

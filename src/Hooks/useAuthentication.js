@@ -24,7 +24,6 @@ export function useAuthentication(){
       if(user) {
         setAuthenticated(user)
       }
-      console.log(user);
     }, function(error){
       console.log(error);
     })

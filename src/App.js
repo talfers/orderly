@@ -12,9 +12,6 @@ import { useAuthentication } from './Hooks/useAuthentication';
 import { OrderModal } from './Order/OrderModal';
 import { useOrderModal } from './Hooks/useOrderModal';
 
-
-const database = window.firebase.database();
-
 function App() {
   const openItem = useOpenItem();
   const orders = useOrders();

@@ -65,6 +65,7 @@ export const foods = [
   {
     name: "Soda",
     section: "drinks",
+    img: "/img/soda.jpg",
     price: 2,
     choices: ["Dr. Pepper", "Coca Cola", "Sprite", "Pespi"],
     canCustomize: false
@@ -72,6 +73,7 @@ export const foods = [
   {
     name: "Tea",
     section: "drinks",
+    img: "/img/tea.jpg",
     price: 1.50,
     choices: ["Raspberry", "Lemon", "Cherry"],
     canCustomize: false
