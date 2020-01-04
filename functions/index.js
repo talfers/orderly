@@ -34,4 +34,5 @@ function sendOrderEmail({order, email}) {
     `
   }
   mailTransport.sendMail(mailOptions);
+  return "email sent!"
 }
