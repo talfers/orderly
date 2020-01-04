@@ -11,42 +11,48 @@ export const foods = [
     img: "/img/pizza_item_1.jpg",
     section: "pizza",
     price: 12,
-    canCustomize: true
+    canCustomize: true,
+    toppings: []
   },
   {
     name: "Cheese Pizza",
     img: "/img/pizza_item_2.jpg",
     section: "pizza",
     price: 11,
-    canCustomize: true
+    canCustomize: true,
+    toppings: []
   },
   {
     name: "Veggie Pizza",
     img: "/img/pizza_item_3.jpg",
     section: "pizza",
     price: 15,
-    canCustomize: true
+    canCustomize: true,
+    toppings: []
   },
   {
     name: "Sausage Pizza",
     img: "/img/pizza_item_4.jpg",
     section: "sandwiches",
     price: 13,
-    canCustomize: false
+    canCustomize: false,
+    toppings: []
   },
   {
     name: "Some Pizza",
     img: "/img/pizza_item_5.jpg",
     section: "sandwiches",
     price: 10,
-    canCustomize: false
+    canCustomize: false,
+    toppings: []
   },
   {
     name: "Other Pizza",
     img: "/img/pizza_item_6.jpg",
     section: "sandwiches",
     price: 9,
-    canCustomize: false
+    canCustomize: false,
+    toppings: []
   },
   {
     name: "Best Pizza",

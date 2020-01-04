@@ -20,7 +20,7 @@ export const Modal = styled.div`
   background: white;
   top: 150px;
   z-index: 19;
-  max-height: calc(100% - 100px);
+  max-height: calc(100vh - 150px);
   left: calc(50% - 250px);
 `;
 
@@ -35,7 +35,8 @@ export const ModalShadow = styled.div`
 `;
 
 const ModalBanner = styled.div`
-  min-height: 200px;
+  min-height: 100px;
+  height: 200px;
   margin-bottom: 20px;
   ${({img}) => (img ? `background-image: url(${img});` : `min-height: 75px;`)}
   background-position: center;
@@ -50,7 +51,7 @@ const ModalBannerLabel = styled(MenuItemLabel)`
 
 export const ModalContent = styled.div`
   overflow: auto;
-  min-height: 100px;
+
   padding: 0px 40px;
   padding-bottom: 80px;
 `;
