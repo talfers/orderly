@@ -3,20 +3,37 @@ import styled from 'styled-components';
 import { ModalFooter, ModalContent, ConfirmButton } from '../Menu/MenuModal';
 import { formatPrice } from '../Data/foodData';
 import { getPrice } from '../Menu/MenuModal';
+import { pizzaRed } from '../Styles/colors';
 
 const database = window.firebase.database();
 
 const OrderStyled = styled.div`
   position: fixed;
   right: 0px;
-  top: 84px;
+  top: 90px;
   width: 340px;
   background: #fff;
-  height: calc(100% - 84px);
+  height: calc(100% - 90px);
   box-shadow: 0px 0px 5px 1px grey;
   z-index: 5;
   display: flex;
   flex-direction: column;
+`;
+
+const OrderOpenButton = styled.div`
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  top: 12px;
+  left: -70px;
+  width: 54px
+  padding: 4px 8px
+  background: ${pizzaRed};
+  font-size: 16px;
+  color: #fff;
+  border-radius: 8px 0px 0px 8px;
+  cursor: pointer;
 `;
 
 const OrderContent = styled(ModalContent)`
@@ -98,6 +115,7 @@ export function Order({orders, setOrders, setOpenItem, loggedIn, login, setOrder
 
   return (
     <OrderStyled>
+    <OrderOpenButton>&#8249;    Order</OrderOpenButton>
     {orders.length === 0 ? (
       <OrderContent>
         Your order is looking pretty empty.

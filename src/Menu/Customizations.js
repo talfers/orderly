@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { formatPrice } from '../Data/foodData';
 
 const CustomizationsGrid = styled.div`
   display: grid;
@@ -15,6 +16,14 @@ const CheckboxLabel = styled.label`
   cursor: pointer;
 `;
 
+const ToppingPrice = styled.div`
+  color: grey;
+  font-size: 10px;
+  font-style: italic;
+  display: inline;
+  margin-left: 4px;
+`;
+
 export function Customizations({toppings, checkTopping}) {
   return (
     <CustomizationsGrid>
@@ -23,6 +32,7 @@ export function Customizations({toppings, checkTopping}) {
           <CheckboxLabel>
             <CustomizationsCheckbox checked={topping.checked} onClick={() => checkTopping(index)} type="checkbox"/>
             {topping.name}
+            <ToppingPrice>(+{formatPrice(topping.price)})</ToppingPrice>
           </CheckboxLabel>
         )
       })}

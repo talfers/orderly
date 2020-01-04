@@ -15,13 +15,13 @@ export const Modal = styled.div`
   position: fixed;
   display: flex;
   flex-direction: column;
-  width: 500px;
+  width: 550px;
   display: flex;
   background: white;
   top: 150px;
   z-index: 19;
   max-height: calc(100vh - 150px);
-  left: calc(50% - 250px);
+  left: calc(50% - 275px);
 `;
 
 export const ModalShadow = styled.div`
@@ -82,6 +82,7 @@ export const ConfirmButton = styled(Title)`
   )}
 `;
 
+
 export function getPrice(order) {
   let toppingPrice = order.toppings.reduce((total, topping) => {
     if(topping.checked) {
@@ -94,7 +95,7 @@ export function getPrice(order) {
 }
 
 function canCustomize(item) {
-  return item.canCustomize === true;
+  return item.toppings && item.toppings.length > 0;
 }
 
 function MenuModalContainer({openItem, setOpenItem, orders, setOrders}) {

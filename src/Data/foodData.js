@@ -11,78 +11,260 @@ export const foods = [
     img: "/img/pizza_item_1.jpg",
     section: "pizza",
     price: 12,
-    canCustomize: true,
-    toppings: []
+    toppings: [
+      {
+        name: "Onion",
+        checked: false,
+        price: 0.35
+      },
+      {
+        name: "Jalapenos",
+        checked: false,
+        price: 0.35
+      },
+      {
+        name: "Beef",
+        checked: false,
+        price: 0.75
+      },
+      {
+        name: "Sausage",
+        checked: false,
+        price: 0.75
+      },
+      {
+        name: "Tomato",
+        checked: false,
+        price: 0.5
+      },
+      {
+        name: "Pineapple",
+        checked: false,
+        price: 0.5
+      }
+
+    ]
   },
   {
     name: "Cheese Pizza",
     img: "/img/pizza_item_2.jpg",
     section: "pizza",
     price: 11,
-    canCustomize: true,
-    toppings: []
+    toppings: [
+      {
+        name: "Spinach",
+        checked: false,
+        price: 0.5
+      },
+      {
+        name: "Black Olives",
+        checked: false,
+        price: 0.25
+      },
+      {
+        name: "Pepperoni",
+        checked: false,
+        price: 0.25
+      },
+      {
+        name: "Green Peppers",
+        checked: false,
+        price: 0.35
+      },
+      {
+        name: "Feta Cheese",
+        checked: false,
+        price: 0.5
+      },
+      {
+        name: "Broccoli",
+        checked: false,
+        price: 0.5
+      }
+
+    ]
   },
   {
     name: "Veggie Pizza",
     img: "/img/pizza_item_3.jpg",
     section: "pizza",
     price: 15,
-    canCustomize: true,
-    toppings: []
+    toppings: [
+      {
+        name: "Onions",
+        checked: false,
+        price: 0.35
+      },
+      {
+        name: "Green Peppers",
+        checked: false,
+        price: 0.35
+      },
+      {
+        name: "Black Olives",
+        checked: false,
+        price: 0.25
+      },
+      {
+        name: "Mushrooms",
+        checked: false,
+        price: 0.5
+      },
+      {
+        name: "Spinach",
+        checked: false,
+        price: 0.5
+      },
+      {
+        name: "Feta Cheese",
+        checked: false,
+        price: 0.5
+      }
+
+    ]
   },
   {
-    name: "Sausage Pizza",
-    img: "/img/pizza_item_4.jpg",
+    name: "Club Sandwich",
+    img: "/img/sandwich_item_2.jpg",
     section: "sandwiches",
-    price: 13,
-    canCustomize: false,
-    toppings: []
+    price: 8,
+    toppings: [
+      {
+        name: "Boiled Egg",
+        checked: false,
+        price: 0.5
+      },
+      {
+        name: "Bacon",
+        checked: false,
+        price: 1.5
+      },
+      {
+        name: "Sausage",
+        checked: false,
+        price: 0.75
+      },
+      {
+        name: "Pepperoni",
+        checked: false,
+        price: 0.25
+      },
+      {
+        name: "Green Onion",
+        checked: false,
+        price: 0.5
+      },
+      {
+        name: "Beef",
+        checked: false,
+        price: 0.75
+      }
+
+    ]
   },
   {
-    name: "Some Pizza",
-    img: "/img/pizza_item_5.jpg",
+    name: "Turkey & Swiss Sandwich",
+    img: "/img/sandwich_item_1.jpg",
     section: "sandwiches",
-    price: 10,
-    canCustomize: false,
-    toppings: []
+    price: 7,
+    toppings: [
+      {
+        name: "Pepperoni",
+        checked: false,
+        price: 0.25
+      },
+      {
+        name: "Green Peppers",
+        checked: false,
+        price: 0.35
+      },
+      {
+        name: "Onion",
+        checked: false,
+        price: 0.35
+      },
+      {
+        name: "Mushrooms",
+        checked: false,
+        price: 0.5
+      },
+      {
+        name: "Extra Cheese",
+        checked: false,
+        price: 0.5
+      },
+      {
+        name: "Black Olives",
+        checked: false,
+        price: 0.25
+      }
+
+    ]
   },
   {
-    name: "Other Pizza",
-    img: "/img/pizza_item_6.jpg",
+    name: "BBQ Sandwich",
+    img: "/img/sandwich_item_3.jpg",
     section: "sandwiches",
-    price: 9,
-    canCustomize: false,
-    toppings: []
+    price: 7,
+    toppings: [
+      {
+        name: "Bacon",
+        checked: false,
+        price: 1.5
+      },
+      {
+        name: "Pineapple",
+        checked: false,
+        price: 0.5
+      },
+      {
+        name: "Jalapenos",
+        checked: false,
+        price: 0.35
+      },
+      {
+        name: "Beef",
+        checked: false,
+        price: 0.75
+      },
+      {
+        name: "Sausage",
+        checked: false,
+        price: 0.75
+      },
+      {
+        name: "Extra Cheese",
+        checked: false,
+        price: 0.5
+      }
+
+    ]
   },
   {
-    name: "Best Pizza",
-    img: "/img/pizza_item_7.jpg",
+    name: "Fries",
+    img: "/img/side_item_2.jpg",
     section: "sides",
-    price: 17,
-    canCustomize: false
+    price: 3
   },
   {
-    name: "Egg Pizza",
-    img: "/img/pizza_item_8.jpg",
+    name: "House Salad",
+    img: "/img/side_item_1.jpg",
     section: "sides",
-    price: 12,
-    canCustomize: false
+    price: 4
   },
   {
     name: "Soda",
     section: "drinks",
     img: "/img/soda.jpg",
     price: 2,
-    choices: ["Dr. Pepper", "Coca Cola", "Sprite", "Pespi"],
-    canCustomize: false
+    choices: ["Dr. Pepper", "Coca Cola", "Sprite", "Pespi"]
   },
   {
     name: "Tea",
     section: "drinks",
     img: "/img/tea.jpg",
     price: 1.50,
-    choices: ["Raspberry", "Lemon", "Cherry"],
-    canCustomize: false
+    choices: ["Raspberry", "Lemon", "Cherry"]
   }
 ]
 
