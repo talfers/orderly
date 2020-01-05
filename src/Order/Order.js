@@ -128,7 +128,7 @@ export function Order({orders, setOrders, setOpenItem, loggedIn, login, setOrder
     <OrderStyled mobile={isMobile} open={orderDrawerOpen}>
     <OrderOpenButton
       onClick={() => setOrderDrawerOpen(!orderDrawerOpen)}
-    >&#8249;    Order</OrderOpenButton>
+    >{orderDrawerOpen? `Order  >`:`<  Order`}</OrderOpenButton>
     {orders.length === 0 ? (
       <OrderContent>
         Your order is looking pretty empty.
