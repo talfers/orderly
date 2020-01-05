@@ -67,7 +67,7 @@ export function Navbar({login, loggedIn, logout}){
       <UserStatus>
       {loggedIn.email ?
         <>
-          <LoginButton>{loggedIn.displayName}</LoginButton>
+          <LoginButton>{loggedIn.displayName.split(" ")[0]}</LoginButton>
           <LoginButton
             hover
             onClick={() => {logout()}}

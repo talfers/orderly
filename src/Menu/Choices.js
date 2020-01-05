@@ -1,8 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
+const ChoiceContainer = styled.div`
+  display: inline-block;
+`
+
 const RadioButton = styled.input`
   cursor: pointer;
+  margin-right: 4px;
 `
 
 const Label = styled.label`
@@ -14,9 +19,9 @@ export function Choices({openItem, chosenRadio}) {
   return (
     <>
       <h3>Choose One:</h3>
-      {openItem.choices.map(choice => {
+      {openItem.choices.map((choice, index) => {
         return (
-          <>
+          <ChoiceContainer key={index}>
             <RadioButton
               type="radio"
               id={choice}
@@ -25,8 +30,8 @@ export function Choices({openItem, chosenRadio}) {
               checked={chosenRadio.choice === choice}
               onChange={(e) => {chosenRadio.onChange(e)}}
             />
-            <Label for={choice}>{choice}</Label>
-          </>
+            <Label htmlfor={choice}>{choice}</Label>
+          </ChoiceContainer>
         )
 
       })}

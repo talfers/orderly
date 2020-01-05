@@ -1,7 +1,18 @@
 import { useState } from 'react';
 
 export function useCustomizations(defaultToppings) {
-  const [toppings, setToppings] = useState(defaultToppings || getDefaultToppings());
+  let itemToppings = null;
+  if(defaultToppings && defaultToppings !== 'none') {
+    itemToppings = defaultToppings.map(t => {
+      return (
+        {...t, checked: false}
+      )
+    })
+  }
+  if(defaultToppings === 'none') {
+    itemToppings = [];
+  }
+  const [toppings, setToppings] = useState(itemToppings || getDefaultToppings());
 
   function checkTopping(index){
     const newToppings = [...toppings];

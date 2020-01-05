@@ -9,6 +9,9 @@ const QuantityInputStyled = styled.input`
   text-align: center;
   border: none;
   outline: none;
+  @media only screen and (max-width: 700px) {
+    font-size: 12px;
+  }
 `;
 
 const IncrementContainer = styled(Title)`

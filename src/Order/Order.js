@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ModalFooter, ModalContent, ConfirmButton } from '../Menu/MenuModal';
+import { ModalFooter, ModalShadow, ModalContent, ConfirmButton } from '../Menu/MenuModal';
 import { formatPrice } from '../Data/foodData';
 import { getPrice } from '../Menu/MenuModal';
 import { pizzaRed } from '../Styles/colors';
@@ -10,22 +10,23 @@ const database = window.firebase.database();
 const OrderStyled = styled.div`
   position: fixed;
   right: 0px;
-  top: 90px;
-  width: 340px;
+  top: 88px;
+  width: 400px;
   background: #fff;
-  height: calc(100% - 90px);
+  height: calc(100% - 88px);
   box-shadow: 0px 0px 5px 1px grey;
   z-index: 5;
   display: flex;
   flex-direction: column;
   transition: width 0.3s ease;
+  -webkit-transition: width 0.3s ease;
   ${({open}) => open ? `
     width: 340px;` :
     `width: 0px;`
   }
-  ${({mobile}) => mobile ? `
+  @media only screen and (max-width: 700px) {
     max-width: calc(100vw - 70px);
-  ` : null
+    height: calc(100% - 88px);
   }
 
 `;
@@ -37,8 +38,9 @@ const OrderOpenButton = styled.div`
   justify-content: space-around;
   top: 12px;
   left: -70px;
+  min-height: 40px;
   width: 54px
-  padding: 4px 8px
+  padding: 4px 8px;
   background: ${pizzaRed};
   font-size: 16px;
   color: #fff;
@@ -46,9 +48,20 @@ const OrderOpenButton = styled.div`
   cursor: pointer;
 `;
 
+const OrderShadow = styled(ModalShadow)`
+  display: none;
+  z-index: 4;
+  @media only screen and (max-width: 900px) {
+    display: block;
+  }
+`
+
 const OrderContent = styled(ModalContent)`
   padding: 20px;
   height: 100%;
+  @media only screen and (max-width: 700px) {
+    height: calc(100% );
+  }
 `;
 
 const OrderContainer = styled.div`
@@ -66,7 +79,7 @@ const OrderContainer = styled.div`
 const OrderItem = styled.div`
   padding: 10px 0px;
   display: grid;
-  grid-template-columns: 20px 150px 20px 60px;
+  grid-template-columns: 20px 140px 30px 60px;
   justify-content: space-between;
 `;
 
@@ -78,6 +91,7 @@ const OrderItemDetail = styled.div`
 const TrashCan = styled.img`
   width: 20px;
   cursor: 'pointer';
+  margin-right: 10px;
 `
 
 const sendOrder = (orders, {email, displayName}) => {
@@ -125,81 +139,84 @@ export function Order({orders, setOrders, setOpenItem, loggedIn, login, setOrder
   }
 
   return (
-    <OrderStyled mobile={isMobile} open={orderDrawerOpen}>
-    <OrderOpenButton
-      onClick={() => setOrderDrawerOpen(!orderDrawerOpen)}
-    >{orderDrawerOpen? `Order  >`:`<  Order`}</OrderOpenButton>
-    {orders.length === 0 ? (
-      <OrderContent>
-        Your order is looking pretty empty.
-        {
-          //<img src="/img/empty.png" />
-        }
-      </OrderContent>
-    ) : (
-      <OrderContent>
-        <OrderContainer>
-          Your Order:
-        </OrderContainer>
-        {orders.map((order, index) => {
-          return (
-            <OrderContainer editable key={index}>
-              <OrderItem onClick={() => {setOpenItem({...order, index})}}>
-                <div>{order.quantity}</div>
-                <div>{order.name}</div>
-                <TrashCan
-                  onClick={(e) => {
-                    deleteItem(index);
-                    e.stopPropagation();
-                  }}
-                  src="/img/trash.png"
-                />
-                <div>{formatPrice(getPrice(order))}</div>
-              </OrderItem>
-              <OrderItemDetail>
-              {
-                order.toppings.filter(t => t.checked)
-                  .map(topping => topping.name)
-                  .join(", ")
-              }</OrderItemDetail>
-              {order.choice ? <OrderItemDetail>{order.choice}</OrderItemDetail> : <div/>}
-            </OrderContainer>
-          )
-        })}
-        <OrderContainer>
-          <OrderItem>
-            <div/>
-            <div>Subtotal:</div>
-            <div>{formatPrice(subtotal)}</div>
-          </OrderItem>
-          <OrderItem>
-            <div/>
-            <div>Tax:</div>
-            <div>{formatPrice(tax)}</div>
-          </OrderItem>
-          <OrderItem>
-            <div/>
-            <div>Total:</div>
-            <div>{formatPrice(total)}</div>
-          </OrderItem>
-        </OrderContainer>
-      </OrderContent>
-    )
+    <>
+      {orderDrawerOpen ? <OrderShadow onClick={() => setOrderDrawerOpen()}/> : <div/>}
+      <OrderStyled mobile={isMobile} open={orderDrawerOpen}>
+      <OrderOpenButton
+        onClick={() => setOrderDrawerOpen(!orderDrawerOpen)}
+      >{orderDrawerOpen? `Order  >`:`<  Order`}</OrderOpenButton>
+      {orders.length === 0 ? (
+        <OrderContent>
+          Your order is looking pretty empty.
+          {
+            //<img src="/img/empty.png" />
+          }
+        </OrderContent>
+      ) : (
+        <OrderContent>
+          <OrderContainer>
+            Your Order:
+          </OrderContainer>
+          {orders.map((order, index) => {
+            return (
+              <OrderContainer editable key={index} onClick={() => {setOpenItem({...order, index})}}>
+                <OrderItem >
+                  <div>{order.quantity}</div>
+                  <div>{order.name}</div>
+                  <TrashCan
+                    onClick={(e) => {
+                      deleteItem(index);
+                      e.stopPropagation();
+                    }}
+                    src="/img/trash.png"
+                  />
+                  <div>{formatPrice(getPrice(order))}</div>
+                </OrderItem>
+                <OrderItemDetail>
+                {
+                  order.toppings.filter(t => t.checked)
+                    .map(topping => topping.name)
+                    .join(", ")
+                }</OrderItemDetail>
+                {order.choice ? <OrderItemDetail>{order.choice}</OrderItemDetail> : <div/>}
+              </OrderContainer>
+            )
+          })}
+          <OrderContainer>
+            <OrderItem>
+              <div/>
+              <div>Subtotal:</div>
+              <div>{formatPrice(subtotal)}</div>
+            </OrderItem>
+            <OrderItem>
+              <div/>
+              <div>Tax:</div>
+              <div>{formatPrice(tax)}</div>
+            </OrderItem>
+            <OrderItem>
+              <div/>
+              <div>Total:</div>
+              <div>{formatPrice(total)}</div>
+            </OrderItem>
+          </OrderContainer>
+        </OrderContent>
+      )
 
-    }
+      }
 
-      <ModalFooter>
-        <ConfirmButton hide={!orderDrawerOpen}  disabled={orders.length === 0} onClick={() => {
-          if(loggedIn){
-            setOrderModalOpen(true);
-            sendOrder(orders, loggedIn);
-          } else {
-            login()
-          }}}
-          >
-            Confirm
-          </ConfirmButton>
-      </ModalFooter>
-    </OrderStyled>
+        <ModalFooter>
+          <ConfirmButton hide={!orderDrawerOpen}  disabled={orders.length === 0} onClick={() => {
+            if(loggedIn){
+              setOrderModalOpen(true);
+              sendOrder(orders, loggedIn);
+            } else {
+              login()
+            }}}
+            >
+              Confirm
+            </ConfirmButton>
+        </ModalFooter>
+      </OrderStyled>
+    </>
   )
 }

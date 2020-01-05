@@ -22,6 +22,11 @@ export const Modal = styled.div`
   z-index: 19;
   max-height: calc(100vh - 150px);
   left: calc(50% - 275px);
+  @media only screen and (max-width: 700px) {
+    width: 320px;
+    left: calc(50% - 160px);
+    max-height: calc(100vh - 240px);
+  }
 `;
 
 export const ModalShadow = styled.div`
@@ -51,13 +56,16 @@ const ModalBannerLabel = styled(MenuItemLabel)`
 
 export const ModalContent = styled.div`
   overflow: auto;
-
   padding: 0px 40px;
   padding-bottom: 80px;
+  @media only screen and (max-width: 700px) {
+    padding-right: 24px;
+    padding-left: 34px;
+  }
 `;
 
 export const ModalFooter = styled.div`
-  height: 60px;
+  min-height: 60px;
   box-shadow: 0px -4px 4px 0px lightgrey;
   display: flex;
   justify-content: center;
@@ -105,7 +113,7 @@ function canCustomize(item) {
 
 function MenuModalContainer({openItem, setOpenItem, orders, setOrders}) {
   const quantity = useQuantity(openItem && openItem.quantity);
-  const toppings = useCustomizations(openItem.toppings);
+  const toppings = useCustomizations(openItem.toppings ? openItem.toppings : 'none');
   const chosenRadio = useChoice(openItem.choice);
   const isEditing = openItem.index > -1;
   const order = {
@@ -157,7 +165,7 @@ function MenuModalContainer({openItem, setOpenItem, orders, setOrders}) {
           <ModalFooter>
             <ConfirmButton
               disabled={openItem.choices && !chosenRadio.choice}
-              onClick={isEditing? () => editOrder(openItem) : () => addToOrder()}
+              onClick={isEditing ? () => editOrder(openItem) : () => addToOrder()}
             >
               {isEditing? "Update Order" : "Add to Order:"} {formatPrice(getPrice(order))}
             </ConfirmButton>
