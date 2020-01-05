@@ -18,6 +18,16 @@ const OrderStyled = styled.div`
   z-index: 5;
   display: flex;
   flex-direction: column;
+  transition: width 0.3s ease;
+  ${({open}) => open ? `
+    width: 340px;` :
+    `width: 0px;`
+  }
+  ${({mobile}) => mobile ? `
+    max-width: calc(100vw - 70px);
+  ` : null
+  }
+
 `;
 
 const OrderOpenButton = styled.div`
@@ -100,7 +110,8 @@ const sendOrder = (orders, {email, displayName}) => {
 
 }
 
-export function Order({orders, setOrders, setOpenItem, loggedIn, login, setOrderModalOpen}) {
+export function Order({orders, setOrders, setOpenItem, loggedIn, login, setOrderModalOpen, orderDrawerOpen, setOrderDrawerOpen, isMobile}) {
+
   const subtotal = orders.reduce((total, order) => {
     return total + getPrice(order);
   }, 0)
@@ -114,8 +125,10 @@ export function Order({orders, setOrders, setOpenItem, loggedIn, login, setOrder
   }
 
   return (
-    <OrderStyled>
-    <OrderOpenButton>&#8249;    Order</OrderOpenButton>
+    <OrderStyled mobile={isMobile} open={orderDrawerOpen}>
+    <OrderOpenButton
+      onClick={() => setOrderDrawerOpen(!orderDrawerOpen)}
+    >&#8249;    Order</OrderOpenButton>
     {orders.length === 0 ? (
       <OrderContent>
         Your order is looking pretty empty.
@@ -176,7 +189,7 @@ export function Order({orders, setOrders, setOpenItem, loggedIn, login, setOrder
     }
 
       <ModalFooter>
-        <ConfirmButton disabled={orders.length === 0} onClick={() => {
+        <ConfirmButton hide={!orderDrawerOpen}  disabled={orders.length === 0} onClick={() => {
           if(loggedIn){
             setOrderModalOpen(true);
             sendOrder(orders, loggedIn);

@@ -80,6 +80,11 @@ export const ConfirmButton = styled(Title)`
       pointer-events: none;
     ` : null
   )}
+  ${({hide}) => (hide ?
+    `
+      display: none
+    ` : null
+  )}
 `;
 
 

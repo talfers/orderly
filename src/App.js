@@ -11,12 +11,14 @@ import { useTitle } from './Hooks/useTitle';
 import { useAuthentication } from './Hooks/useAuthentication';
 import { OrderModal } from './Order/OrderModal';
 import { useOrderModal } from './Hooks/useOrderModal';
+import { useOrderDrawer } from './Hooks/useOrderDrawer';
 
 function App() {
   const openItem = useOpenItem();
   const orders = useOrders();
   const auth = useAuthentication();
   const orderModal = useOrderModal();
+  const orderDrawer = useOrderDrawer();
   useTitle(openItem.openItem, orders.orders)
 
   return (
@@ -24,8 +26,8 @@ function App() {
       <GlobalStyle />
       <Navbar {...auth} />
       <Banner/>
-      <Menu {...openItem} />
-      <Order {...orders} {...openItem} {...auth} {...orderModal}/>
+      <Menu {...openItem} {...orderDrawer} />
+      <Order {...orders} {...openItem} {...auth} {...orderModal} {...orderDrawer}/>
       <MenuModal {...openItem} {...orders} />
       <OrderModal {...orderModal} {...orders}/>
     </>

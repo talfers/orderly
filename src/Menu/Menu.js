@@ -4,15 +4,24 @@ import { menuItems, formatPrice } from '../Data/foodData';
 import { MenuGrid, MenuItem, MenuItemLabel } from './MenuGrid';
 
 export const MenuStyled = styled.div`
-  margin: 0px 400px 50px 20px;
+  margin: 0px 360px 50px 20px;
+  transition: margin-right 0.3s ease;
+  ${({open, mobile}) => {
+    if(open && !mobile) {
+      return `margin-right: 360px;`
+    } else {
+      return `margin-right: 20px;`
+    }
+    if(mobile) {
+      return `margin-right: 20px;`
+    }
+  }
+}
 `;
 
-export function Menu({setOpenItem}){
+export function Menu({setOpenItem, orderDrawerOpen, isMobile}){
   return (
-    <MenuStyled>
-      {
-        //<h1>Menu</h1>
-      }
+    <MenuStyled mobile={isMobile} open={orderDrawerOpen}>
         <>
           {Object.entries(menuItems).map(([key, values]) => {
             return(
