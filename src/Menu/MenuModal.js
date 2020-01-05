@@ -112,10 +112,10 @@ function canCustomize(item) {
 }
 
 function MenuModalContainer({openItem, setOpenItem, orders, setOrders}) {
-  const quantity = useQuantity(openItem && openItem.quantity);
-  const toppings = useCustomizations(openItem.toppings ? openItem.toppings : 'none');
-  const chosenRadio = useChoice(openItem.choice);
   const isEditing = openItem.index > -1;
+  const quantity = useQuantity(openItem && openItem.quantity);
+  const chosenRadio = useChoice(openItem.choice);
+  const toppings = useCustomizations(openItem.toppings ? openItem.toppings : 'none', isEditing);
   const order = {
     ...openItem,
     quantity: quantity.quantity,

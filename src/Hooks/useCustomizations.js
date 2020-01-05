@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export function useCustomizations(defaultToppings) {
+export function useCustomizations(defaultToppings, isEditing) {
   let itemToppings = null;
   if(defaultToppings && defaultToppings !== 'none') {
     itemToppings = defaultToppings.map(t => {
@@ -11,6 +11,9 @@ export function useCustomizations(defaultToppings) {
   }
   if(defaultToppings === 'none') {
     itemToppings = [];
+  }
+  if(isEditing) {
+    itemToppings = defaultToppings;
   }
   const [toppings, setToppings] = useState(itemToppings || getDefaultToppings());
 
