@@ -12,6 +12,8 @@ import { useAuthentication } from './Hooks/useAuthentication';
 import { OrderModal } from './Order/OrderModal';
 import { useOrderModal } from './Hooks/useOrderModal';
 import { useOrderDrawer } from './Hooks/useOrderDrawer';
+import { useOrderType } from './Hooks/useOrderType';
+import { OrderTypeModal } from './Order/OrderTypeModal';
 
 function App() {
   const openItem = useOpenItem();
@@ -19,6 +21,7 @@ function App() {
   const auth = useAuthentication();
   const orderModal = useOrderModal();
   const orderDrawer = useOrderDrawer();
+  const orderType = useOrderType();
   useTitle(openItem.openItem, orders.orders)
 
   return (
@@ -30,6 +33,7 @@ function App() {
       <Order {...orders} {...openItem} {...auth} {...orderModal} {...orderDrawer}/>
       <MenuModal {...openItem} {...orders} />
       <OrderModal {...orderModal} {...orders}/>
+      <OrderTypeModal {...orderType} />
     </>
   );
 }

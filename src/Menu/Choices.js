@@ -1,16 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const ChoiceContainer = styled.div`
+export const ChoiceContainer = styled.div`
   display: inline-block;
 `
 
-const RadioButton = styled.input`
+export const RadioButton = styled.input`
   cursor: pointer;
   margin-right: 4px;
 `
 
-const Label = styled.label`
+export const Label = styled.label`
   cursor: pointer;
   margin-right: 10px;
 `;
