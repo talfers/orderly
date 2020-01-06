@@ -20,7 +20,6 @@ export const MenuStyled = styled.div`
 `;
 
 export function Menu({setOpenItem, orderDrawerOpen, isMobile}){
-
   return (
     <MenuStyled mobile={isMobile} open={orderDrawerOpen}>
         <>

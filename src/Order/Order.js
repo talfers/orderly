@@ -116,6 +116,7 @@ const sendOrder = (orders, {email, displayName}) => {
       }
     }, {})
   })
+  console.log(newOrders);
   newOrderRef.set({
     order: newOrders,
     email,
