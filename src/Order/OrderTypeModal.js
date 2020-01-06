@@ -6,13 +6,8 @@ import { stores } from '../Data/storeData';
 import { pizzaRed } from '../Styles/colors';
 
 const ModalTitle = styled.h3`
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 `;
-
-const FormLabel = styled.label`
-  font-size: 12px;
-`;
-
 
 const StoreGrid = styled.div`
   display: grid;
@@ -45,24 +40,53 @@ const StoreTitle = styled.h3`
 const DeliveryContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
 `;
 
 const DeliveryInputContainer = styled.div`
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(6, calc((100%/6)));
+  grid-template-areas:
+    "add1 add1 add1 add1 add2 add2"
+    "city city city state zip zip"
+    "phone phone phone phone ext ext";
+  @media only screen and (max-width: 900px) {
+    grid-template-areas:
+      "add1 add1 add1 add1 add2 add2"
+      "city city city city state state"
+      "zip zip phone phone phone ext";
+
+  }
 `;
 
-const DeliveryInput = styled.input`
+const AddressInputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const FormLabel = styled.label`
+  font-size: 12px;
+  margin-top: 8px
+  margin-bottom: 4px;
+`;
+
+const AddressInput = styled.input`
   border-radius: 4px;
   border: lightgrey solid 1px;
-  display: inline-block;
   height: 30px;
-  margin: 12px 0px;
-  width: 200px;
+  margin-right: 6px;
   font-size: 16px;
+  ${({error}) => error ? `border: 1px red solid`: null}
+  &#zipcode, &#ext, &#address2 {
+    margin-right: 0;
+  }
+  @media only screen and (max-width: 900px) {
+    &#ext, &#state, &#address2 {
+      margin-right: 0;
+    }
+    &#zipcode {
+      margin-right: 6px;
+    }
+  }
 `;
 
 const SumbitButton = styled.button`
@@ -71,7 +95,7 @@ const SumbitButton = styled.button`
   background: ${pizzaRed}
   color: #fff;
   display: inline;
-  margin: 8px 0;
+  margin: 12px 0;
   height: 30px;
   cursor: pointer;
   border: none;
@@ -82,12 +106,15 @@ const initialAddress = {
   address2: '',
   city: '',
   state: '',
-  zipcode: ''
+  zipcode: '',
+  phone: '',
+  ext: ''
 }
 
 export function OrderTypeModal({orderType, setOrderType, store, setStore, destination, setDestination}) {
 
   const [address, setAddress] = useState(initialAddress);
+  const [errors, setErrors] = useState([]);
   return (
       <>
         { !orderType.decision ?
@@ -132,68 +159,119 @@ export function OrderTypeModal({orderType, setOrderType, store, setStore, destin
                       <DeliveryContainer>
                         <ModalTitle>Enter Address:</ModalTitle>
                         <DeliveryInputContainer>
-                          <FormLabel htmlfor="address1"></FormLabel>
-                          <DeliveryInput
-                            style={{width: '75%'}}
-                            id="address1"
-                            name="destination"
-                            value={address.address1}
-                            onChange={(e) => {
-                              const newValue = { ...address, address1: e.target.value }
-                              setAddress(newValue);
-                            }}
-                          />
-                          <FormLabel htmlfor=""></FormLabel>
-                          <DeliveryInput
-                            style={{width: '20%'}}
-                            id="address2"
-                            name="destination"
-                            value={address.address2}
-                            onChange={(e) => {
-                              const newValue = { ...address, address2: e.target.value }
-                              setAddress(newValue);
-                            }}
-                          />
-                          <FormLabel htmlfor=""></FormLabel>
-                          <DeliveryInput
-                            style={{width: '50%'}}
-                            id="city"
-                            name="destination"
-                            value={address.city}
-                            onChange={(e) => {
-                              const newValue = { ...address, city: e.target.value }
-                              setAddress(newValue);
-                            }}
-                          />
-                          <DeliveryInput
-                            style={{width: '15%'}}
-                            id="state"
-                            name="destination"
-                            value={address.state}
-                            onChange={(e) => {
-                              const newValue = { ...address, state: e.target.value }
-                              setAddress(newValue);
-                            }}
-                          />
-                          <DeliveryInput
-                            style={{width: '30%'}}
-                            id="zipcode"
-                            name="destination"
-                            value={address.zipcode}
-                            onChange={(e) => {
-                              const newValue = { ...address, zipcode: e.target.value }
-                              setAddress(newValue);
-                            }}
-                          />
-                          <SumbitButton onClick={() => {
-                            console.log(address);
-                            setDestination(address);
-                            setAddress(initialAddress);
-                          }}
-                          >
-                            Submit
-                          </SumbitButton>
+                          <AddressInputContainer style={{gridArea: 'add1'}}>
+                            <FormLabel htmlfor="address1">Address:</FormLabel>
+                            <AddressInput
+                              error={errors.includes('address1')}
+                              id="address1"
+                              name="destination"
+                              value={address.address1}
+                              onChange={(e) => {
+                                const newValue = { ...address, address1: e.target.value }
+                                setAddress(newValue);
+                              }}
+                            />
+                          </AddressInputContainer>
+
+                          <AddressInputContainer style={{gridArea: 'add2'}}>
+                            <FormLabel htmlfor="address2">Address 2:</FormLabel>
+                            <AddressInput
+                              id="address2"
+                              name="destination"
+                              value={address.address2}
+                              onChange={(e) => {
+                                const newValue = { ...address, address2: e.target.value }
+                                setAddress(newValue);
+                              }}
+                            />
+                          </AddressInputContainer>
+                          <AddressInputContainer style={{gridArea: 'city'}}>
+                            <FormLabel htmlfor="city">City:</FormLabel>
+                            <AddressInput
+                              error={errors.includes('city')}
+                              id="city"
+                              name="destination"
+                              value={address.city}
+                              onChange={(e) => {
+                                const newValue = { ...address, city: e.target.value }
+                                setAddress(newValue);
+                              }}
+                            />
+                          </AddressInputContainer>
+                          <AddressInputContainer style={{gridArea: 'state'}}>
+                            <FormLabel htmlfor="state">State:</FormLabel>
+                            <AddressInput
+                              error={errors.includes('state')}
+                              id="state"
+                              name="destination"
+                              value={address.state}
+                              onChange={(e) => {
+                                const newValue = { ...address, state: e.target.value }
+                                setAddress(newValue);
+                              }}
+                            />
+                          </AddressInputContainer>
+                          <AddressInputContainer style={{gridArea: 'zip'}}>
+                            <FormLabel htmlfor="zipcode">Zipcode:</FormLabel>
+                            <AddressInput
+                              error={errors.includes('zipcode')}
+                              id="zipcode"
+                              name="destination"
+                              value={address.zipcode}
+                              onChange={(e) => {
+                                const newValue = { ...address, zipcode: e.target.value }
+                                setAddress(newValue);
+                              }}
+                            />
+                          </AddressInputContainer>
+                          <AddressInputContainer style={{gridArea: 'phone'}}>
+                            <FormLabel htmlfor="phone">Phone:</FormLabel>
+                            <AddressInput
+                              error={errors.includes('phone')}
+                              id="phone"
+                              name="destination"
+                              value={address.phone}
+                              onChange={(e) => {
+                                const newValue = { ...address, phone: e.target.value }
+                                setAddress(newValue);
+                              }}
+                            />
+                          </AddressInputContainer>
+                          <AddressInputContainer style={{gridArea: 'ext'}}>
+                            <FormLabel htmlfor="ext">Ext:</FormLabel>
+                            <AddressInput
+                              id="ext"
+                              name="destination"
+                              value={address.ext}
+                              onChange={(e) => {
+                                const newValue = { ...address, ext: e.target.value }
+                                setAddress(newValue);
+                              }}
+                            />
+                          </AddressInputContainer>
+
                         </DeliveryInputContainer>
+                        <SumbitButton
+
+                          onClick={() => {
+                            if(!address.address1 || !address.city || !address.state || !address.phone) {
+                              let currentErrs = [];
+                              Object.keys(address).forEach(key => {
+                                if(address[key] === '') {
+                                  currentErrs.push(key)
+                                }
+                              })
+                              setErrors(currentErrs)
+                            } else {
+                              setDestination(address);
+                              setAddress(initialAddress);
+                              setErrors([]);
+                            }
+
+                          }}
+                        >
+                          Submit
+                        </SumbitButton>
                         <div>{destination ?
                           <>
                             <span style={{color: 'grey'}}>Delivering to: </span>
@@ -207,7 +285,7 @@ export function OrderTypeModal({orderType, setOrderType, store, setStore, destin
                       </DeliveryContainer> :
                       <div/>
                   }
-                  <h3>Selection Location:</h3>
+                  <ModalTitle>Selection Location:</ModalTitle>
                   <StoreGrid>
                     {
                       stores.map((s, i) => {
