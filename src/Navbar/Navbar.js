@@ -40,6 +40,9 @@ const StoreDisplay = styled.div`
   padding: 6px 10px;
   border-radius: 10px;
   margin-right: 20px;
+  @media only screen and (max-width: 1000px) {
+    display: none;
+  }
 `;
 
 const LoginButton = styled.span`

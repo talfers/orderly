@@ -19,6 +19,9 @@ const StoreGrid = styled.div`
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 12px;
   margin: 12px 0;
+  @media only screen and (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const StoreContainer = styled.div`
