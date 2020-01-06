@@ -11,6 +11,7 @@ import { useCustomizations } from '../Hooks/useCustomizations';
 import { useChoice } from '../Hooks/useChoice';
 import { Choices } from './Choices';
 
+
 export const Modal = styled.div`
   position: fixed;
   display: flex;
@@ -111,7 +112,7 @@ function canCustomize(item) {
   return item.toppings && item.toppings.length > 0;
 }
 
-function MenuModalContainer({openItem, setOpenItem, orders, setOrders}) {
+function MenuModalContainer({openItem, setOpenItem, orders, setOrders, store, orderType, destination}) {
   const isEditing = openItem.index > -1;
   const quantity = useQuantity(openItem && openItem.quantity);
   const chosenRadio = useChoice(openItem.choice);
@@ -120,12 +121,15 @@ function MenuModalContainer({openItem, setOpenItem, orders, setOrders}) {
     ...openItem,
     quantity: quantity.quantity,
     toppings: toppings.toppings,
-    choice: chosenRadio.choice
+    choice: chosenRadio.choice,
+    store,
+    orderType: orderType.selection,
+    destination
   };
-
   const closeModal = () => {
     setOpenItem();
   }
+
   const addToOrder = () => {
     setOrders([...orders, order]);
     closeModal();
@@ -139,6 +143,7 @@ function MenuModalContainer({openItem, setOpenItem, orders, setOrders}) {
   }
 
   return (
+
       <>
         <ModalShadow onClick={() => closeModal()}/>
         <Modal>

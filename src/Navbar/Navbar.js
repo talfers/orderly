@@ -31,6 +31,15 @@ const UserStatus = styled.div`
   color: #fff;
   font-size: 16px;
   margin-right: 30px;
+  display: flex;
+  align-items: center;
+`;
+
+const StoreDisplay = styled.div`
+  background: darkred;
+  padding: 6px 10px;
+  border-radius: 10px;
+  margin-right: 20px;
 `;
 
 const LoginButton = styled.span`
@@ -60,11 +69,12 @@ const LoginButton = styled.span`
   }
 `;
 
-export function Navbar({login, loggedIn, logout}){
+export function Navbar({login, loggedIn, logout, store, orderType}){
   return (
     <NavbarStyled>
       <Brand><Logo src="/logo128.png"/>Orderly</Brand>
       <UserStatus>
+      {store ? <StoreDisplay>Ordering {orderType.selection} at {store.location}</StoreDisplay> : <div/>}
       {loggedIn.email ?
         <>
           <LoginButton>{loggedIn.displayName.split(" ")[0]}</LoginButton>
@@ -95,8 +105,8 @@ export function Navbar({login, loggedIn, logout}){
         </> :
         <></>
       }
-
       </UserStatus>
+
     </NavbarStyled>
   )
 }

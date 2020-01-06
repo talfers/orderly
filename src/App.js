@@ -14,6 +14,8 @@ import { useOrderModal } from './Hooks/useOrderModal';
 import { useOrderDrawer } from './Hooks/useOrderDrawer';
 import { useOrderType } from './Hooks/useOrderType';
 import { OrderTypeModal } from './Order/OrderTypeModal';
+import { useStoreLocation } from './Hooks/useStoreLocation';
+import { useDeliveryLocation } from './Hooks/useDeliveryLocation';
 
 function App() {
   const openItem = useOpenItem();
@@ -22,18 +24,20 @@ function App() {
   const orderModal = useOrderModal();
   const orderDrawer = useOrderDrawer();
   const orderType = useOrderType();
+  const storeLocation = useStoreLocation();
+  const deliveryLocation = useDeliveryLocation();
   useTitle(openItem.openItem, orders.orders)
 
   return (
     <>
       <GlobalStyle />
-      <Navbar {...auth} />
+      <Navbar {...auth} {...orderType} {...storeLocation} />
       <Banner/>
       <Menu {...openItem} {...orderDrawer} />
       <Order {...orders} {...openItem} {...auth} {...orderModal} {...orderDrawer}/>
-      <MenuModal {...openItem} {...orders} />
+      <MenuModal {...openItem} {...orders} {...storeLocation} {...orderType} {...deliveryLocation}/>
       <OrderModal {...orderModal} {...orders}/>
-      <OrderTypeModal {...orderType} />
+      <OrderTypeModal {...orderType} {...storeLocation} {...deliveryLocation}/>
     </>
   );
 }
