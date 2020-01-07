@@ -40,6 +40,7 @@ const StoreDisplay = styled.div`
   padding: 6px 10px;
   border-radius: 10px;
   margin-right: 20px;
+  cursor: pointer;
   @media only screen and (max-width: 1000px) {
     display: none;
   }
@@ -72,12 +73,12 @@ const LoginButton = styled.span`
   }
 `;
 
-export function Navbar({login, loggedIn, logout, store, orderType}){
+export function Navbar({login, loggedIn, logout, store, orderType, setOrderType}){
   return (
     <NavbarStyled>
       <Brand><Logo src="/logo128.png"/>Orderly</Brand>
       <UserStatus>
-      {store ? <StoreDisplay>Ordering {orderType.selection} at {store.location}</StoreDisplay> : <div/>}
+      {store ? <StoreDisplay onClick={() => setOrderType({...orderType, decision: false})}>{orderType.selection === 'delivery' ? `Delivery from ${store.location}` : `Pickup at ${store.location}`}</StoreDisplay> : <div/>}
       {loggedIn.email ?
         <>
           <LoginButton>{loggedIn.displayName.split(" ")[0]}</LoginButton>

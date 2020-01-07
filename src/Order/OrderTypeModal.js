@@ -75,6 +75,7 @@ const AddressInput = styled.input`
   height: 30px;
   margin-right: 6px;
   font-size: 16px;
+  padding-left: 3px;
   ${({error}) => error ? `border: 1px red solid`: null}
   &#zipcode, &#ext, &#address2 {
     margin-right: 0;
@@ -96,7 +97,8 @@ const SumbitButton = styled.button`
   color: #fff;
   display: inline;
   margin: 12px 0;
-  height: 30px;
+  height: 36px;
+  font-size: 16px;
   cursor: pointer;
   border: none;
 `;
@@ -110,6 +112,10 @@ const initialAddress = {
   phone: '',
   ext: ''
 }
+
+const Errors = styled.div`
+  color: red;
+`;
 
 export function OrderTypeModal({orderType, setOrderType, store, setStore, destination, setDestination}) {
 
@@ -135,7 +141,15 @@ export function OrderTypeModal({orderType, setOrderType, store, setStore, destin
                     setOrderType(selection)
                   }}
                 />
-                <Label htmlfor={"orderType"}>Delivery</Label>
+                <Label
+                  onClick={() => {
+                    const selection = {...orderType, selection:'delivery'}
+                    setOrderType(selection)
+                  }}
+                  htmlfor={"orderType"}
+                >
+                  Delivery
+                </Label>
               </ChoiceContainer>
               <ChoiceContainer>
                 <RadioButton
@@ -149,7 +163,15 @@ export function OrderTypeModal({orderType, setOrderType, store, setStore, destin
                     setOrderType(selection)
                   }}
                 />
-                <Label htmlfor={"orderType"}>Pickup</Label>
+                <Label
+                  onClick={() => {
+                    const selection = {...orderType, selection:'pickup'}
+                    setOrderType(selection)
+                  }}
+                  htmlfor={"orderType"}
+                >
+                  Pickup
+                </Label>
               </ChoiceContainer>
             {!orderType.selection ?
             <div/>  :
@@ -254,10 +276,10 @@ export function OrderTypeModal({orderType, setOrderType, store, setStore, destin
                         <SumbitButton
 
                           onClick={() => {
-                            if(!address.address1 || !address.city || !address.state || !address.phone) {
+                            if(!address.address1 || !address.city || !address.state || !address.phone || !address.zipcode) {
                               let currentErrs = [];
                               Object.keys(address).forEach(key => {
-                                if(address[key] === '') {
+                                if(address[key] === '' && key !== 'ext' && key !== 'address2') {
                                   currentErrs.push(key)
                                 }
                               })
@@ -272,6 +294,18 @@ export function OrderTypeModal({orderType, setOrderType, store, setStore, destin
                         >
                           Submit
                         </SumbitButton>
+
+                        <div>
+                          {errors.length > 0 ?
+                            <Errors>
+                              Must enter:
+                              {errors.map(error => {
+                                return <span> {error} </span>
+                              })}
+                              !
+                            </Errors> : <div/>}
+                        </div>
+
                         <div>{destination ?
                           <>
                             <span style={{color: 'grey'}}>Delivering to: </span>
